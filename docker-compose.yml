@@ -1,0 +1,35 @@
+version: '3.8'
+
+networks:
+  backend:
+
+services:
+
+  userservice-db:
+    container_name: userservice-db
+    image: mcr.microsoft.com/mssql/server:2019-latest 
+    environment:
+      - SA_PASSWORD=hamilton23
+      - ACCEPT_EULA=Y  
+      - MSSQL_PID=Evaluation
+    ports:
+      - "6001:1433" 
+    networks:
+     - backend
+
+  userservice:
+    container_name: userservice
+    image: ${DOCKER_REGISTRY-}userservice  
+    build:
+      context: .
+      dockerfile: UserService/Dockerfile  
+    environment:
+      - DB_HOST=userservice-db  
+      - DB_NAME=UserService  
+      - DB_USERNAME=sa  
+      - DB_SA_PASSWORD=hamilton23  
+    depends_on:
+      - userservice-db 
+    networks:
+     - backend
+
