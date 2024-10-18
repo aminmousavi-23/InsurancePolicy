@@ -40,7 +40,7 @@ namespace UserService.Controllers
         public async Task<IActionResult> Post(UserDto userDto)
         {
             var result = await _userRepository.AddAsync(userDto);
-            return Ok(new BaseResponse
+            return Created("",new BaseResponse
             {
                 IsSuccess = result.IsSuccess,
                 Message = result.Message,

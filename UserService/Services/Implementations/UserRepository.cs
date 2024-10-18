@@ -16,6 +16,7 @@ namespace UserService.Services.Implementations
         private readonly IMapper _mapper = mapper;
         private readonly IPasswordHasherService _passwordHasherService = passwordHasherService;
 
+        #region GetAllAsync
         public async Task<BaseResponse<IList<UserVm>>> GetAllAsync()
         {
             try
@@ -37,7 +38,7 @@ namespace UserService.Services.Implementations
                     Result = _mapper.Map<IList<UserVm>>(users)
                 };
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 return new BaseResponse<IList<UserVm>>
                 {
@@ -47,13 +48,15 @@ namespace UserService.Services.Implementations
                 };
             }
         }
+        #endregion
 
+        #region GetByIdAsync
         public async Task<BaseResponse<UserVm>> GetByIdAsync(Guid id)
         {
             try
             {
                 var user = await _context.Users
-                    .Include (u => u.Role)
+                    .Include(u => u.Role)
                     .FirstOrDefaultAsync(u => u.Id == id);
                 if (user == null)
                     return new BaseResponse<UserVm>
@@ -79,6 +82,9 @@ namespace UserService.Services.Implementations
                 };
             }
         }
+        #endregion
+
+        #region AddAsync
         public async Task<BaseResponse> AddAsync(UserDto userDto)
         {
             try
@@ -103,7 +109,19 @@ namespace UserService.Services.Implementations
                         Result = null
                     };
 
-                var newUser = _mapper.Map<User>(userDto);               
+                var existedRole = await _context.Roles
+                    .AnyAsync(w => w.Id == userDto.RoleId);
+                if (existedRole == false)
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "This role is not existed",
+                        Result = null
+                    };
+
+                var newUser = _mapper.Map<User>(userDto);
+
+                newUser.Id = Guid.NewGuid();
 
                 newUser.HashedPassword = _passwordHasherService.HashPassword(userDto.Password);
 
@@ -127,6 +145,9 @@ namespace UserService.Services.Implementations
                 };
             }
         }
+        #endregion
+
+        #region UpdateAsync
         public async Task<BaseResponse> UpdateAsync(UserDto userDto)
         {
             try
@@ -137,6 +158,16 @@ namespace UserService.Services.Implementations
                     {
                         IsSuccess = false,
                         Message = "User was not found",
+                        Result = null
+                    };
+
+                var existedRole = await _context.Roles
+                    .AnyAsync(w => w.Id == userDto.RoleId);
+                if (existedRole == false)
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "This role is not existed",
                         Result = null
                     };
 
@@ -164,6 +195,9 @@ namespace UserService.Services.Implementations
                 };
             }
         }
+        #endregion
+
+        #region DeleteAsync
         public async Task<BaseResponse> DeleteAsync(Guid id)
         {
             try
@@ -197,5 +231,6 @@ namespace UserService.Services.Implementations
                 };
             }
         }
+        #endregion
     }
 }

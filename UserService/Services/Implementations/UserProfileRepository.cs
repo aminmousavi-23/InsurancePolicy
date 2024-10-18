@@ -9,34 +9,34 @@ using UserService.Services.Interfaces;
 
 namespace UserService.Services.Implementations
 {
-    public class RoleRepository(UserContext context, IMapper mapper) : IRoleRepository
+    public class UserProfileRepository(UserContext context, IMapper mapper) : IUserProfileRepository
     {
         private readonly UserContext _context = context;
         private readonly IMapper _mapper = mapper;
 
         #region GetAllAsync
-        public async Task<BaseResponse<IList<RoleVm>>> GetAllAsync()
+        public async Task<BaseResponse<IList<UserProfileVm>>> GetAllAsync()
         {
             try
             {
-                var roles = await _context.Roles.ToListAsync();
-                if (roles == null)
-                    return new BaseResponse<IList<RoleVm>>
+                var userProfiles = await _context.UserProfiles.ToListAsync();
+                if (userProfiles == null)
+                    return new BaseResponse<IList<UserProfileVm>>
                     {
                         IsSuccess = false,
-                        Message = "There is no Roles",
+                        Message = "There is no UserProfiles",
                         Result = null
                     };
-                return new BaseResponse<IList<RoleVm>>
+                return new BaseResponse<IList<UserProfileVm>>
                 {
                     IsSuccess = true,
                     Message = "",
-                    Result = _mapper.Map<IList<RoleVm>>(roles)
+                    Result = _mapper.Map<IList<UserProfileVm>>(userProfiles)
                 };
             }
             catch (Exception ex)
             {
-                return new BaseResponse<IList<RoleVm>>
+                return new BaseResponse<IList<UserProfileVm>>
                 {
                     IsSuccess = false,
                     Message = ex.Message,
@@ -47,28 +47,28 @@ namespace UserService.Services.Implementations
         #endregion
 
         #region GetByIdAsync
-        public async Task<BaseResponse<RoleVm>> GetByIdAsync(Guid id)
+        public async Task<BaseResponse<UserProfileVm>> GetByIdAsync(Guid id)
         {
             try
             {
-                var role = await _context.Roles.FindAsync(id);
-                if (role == null)
-                    return new BaseResponse<RoleVm>
+                var userProfile = await _context.UserProfiles.FindAsync(id);
+                if (userProfile == null)
+                    return new BaseResponse<UserProfileVm>
                     {
                         IsSuccess = false,
-                        Message = "Role was not found",
+                        Message = "UserProfile was not found",
                         Result = null
                     };
-                return new BaseResponse<RoleVm>
+                return new BaseResponse<UserProfileVm>
                 {
                     IsSuccess = true,
                     Message = "",
-                    Result = _mapper.Map<RoleVm>(role)
+                    Result = _mapper.Map<UserProfileVm>(userProfile)
                 };
             }
             catch (Exception ex)
             {
-                return new BaseResponse<RoleVm>
+                return new BaseResponse<UserProfileVm>
                 {
                     IsSuccess = false,
                     Message = ex.Message,
@@ -79,32 +79,32 @@ namespace UserService.Services.Implementations
         #endregion
 
         #region AddAsync
-        public async Task<BaseResponse> AddAsync(RoleDto roleDto)
+        public async Task<BaseResponse> AddAsync(UserProfileDto userProfileDto)
         {
             try
             {
-                var existedRole = await _context.Roles
-                    .AnyAsync(w => w.RoleName == roleDto.RoleName);
-                if (existedRole == true)
+                var existedUserProfile = await _context.UserProfiles
+                    .AnyAsync(w => w.UserId == userProfileDto.UserId);
+                if (existedUserProfile == true)
                     return new BaseResponse
                     {
                         IsSuccess = false,
-                        Message = "This role already existed",
+                        Message = "This UserProfile already existed",
                         Result = null
                     };
 
-                var newRole = _mapper.Map<Role>(roleDto);
+                var newUserProfile = _mapper.Map<UserProfile>(userProfileDto);
 
-                newRole.Id = Guid.NewGuid();
+                newUserProfile.Id = Guid.NewGuid();
 
-                await _context.Roles.AddAsync(newRole);
+                await _context.UserProfiles.AddAsync(newUserProfile);
                 await _context.SaveChangesAsync();
 
                 return new BaseResponse
                 {
                     IsSuccess = true,
-                    Message = "Role has been created successfuly",
-                    Result = $"Role Id : {newRole.Id}"
+                    Message = "UserProfile has been created successfuly",
+                    Result = $"UserProfile Id : {newUserProfile.Id}"
                 };
             }
             catch (Exception ex)
@@ -120,28 +120,28 @@ namespace UserService.Services.Implementations
         #endregion
 
         #region UpdateAsync
-        public async Task<BaseResponse> UpdateAsync(RoleDto roleDto)
+        public async Task<BaseResponse> UpdateAsync(UserProfileDto userProfileDto)
         {
             try
             {
-                var role = await _context.Roles.FindAsync(roleDto.Id);
-                if (role == null)
+                var userProfile = await _context.UserProfiles.FindAsync(userProfileDto.Id);
+                if (userProfile == null)
                     return new BaseResponse
                     {
                         IsSuccess = false,
-                        Message = "Role was not found",
+                        Message = "UserProfile was not found",
                         Result = null
                     };
 
-                _mapper.Map(roleDto, role);
+                _mapper.Map(userProfileDto, userProfile);
 
-                _context.Roles.Update(role);
+                _context.UserProfiles.Update(userProfile);
                 await _context.SaveChangesAsync();
 
                 return new BaseResponse
                 {
                     IsSuccess = true,
-                    Message = "Role has been updated successfully",
+                    Message = "UserProfile has been updated successfully",
                     Result = null
                 };
             }
@@ -162,22 +162,22 @@ namespace UserService.Services.Implementations
         {
             try
             {
-                var role = await _context.Roles.FindAsync(id);
-                if (role == null)
+                var userProfile = await _context.UserProfiles.FindAsync(id);
+                if (userProfile == null)
                     return new BaseResponse
                     {
                         IsSuccess = false,
-                        Message = "Role was not found",
+                        Message = "UserProfile was not found",
                         Result = null
                     };
 
-                _context.Remove(role);
+                _context.Remove(userProfile);
                 await _context.SaveChangesAsync();
 
                 return new BaseResponse
                 {
                     IsSuccess = true,
-                    Message = "Role has been deleted successfully",
+                    Message = "UserProfile has been deleted successfully",
                     Result = null
                 };
             }
@@ -192,6 +192,5 @@ namespace UserService.Services.Implementations
             }
         }
         #endregion
-
     }
 }
