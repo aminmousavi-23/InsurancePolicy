@@ -9,7 +9,7 @@ services:
     container_name: userservice-db
     image: mcr.microsoft.com/mssql/server:2019-latest 
     environment:
-      - SA_PASSWORD=hamilton23
+      - SA_PASSWORD=Hamilton23@
       - ACCEPT_EULA=Y  
       - MSSQL_PID=Evaluation
     ports:
@@ -27,9 +27,41 @@ services:
       - DB_HOST=userservice-db  
       - DB_NAME=UserService  
       - DB_USERNAME=sa  
-      - DB_SA_PASSWORD=hamilton23  
+      - DB_SA_PASSWORD=Hamilton23@  
+    ports:
+      - "8080:80"
     depends_on:
       - userservice-db 
+    networks:
+     - backend
+
+  policyservice-db:
+    container_name: policyservice-db
+    image: mcr.microsoft.com/mssql/server:2019-latest 
+    environment:
+      - SA_PASSWORD=Hamilton23@
+      - ACCEPT_EULA=Y  
+      - MSSQL_PID=Evaluation
+    ports:
+      - "6002:1433" 
+    networks:
+     - backend
+
+  policyservice:
+    container_name: policyservice
+    image: ${DOCKER_REGISTRY-}policyservice  
+    build:
+      context: .
+      dockerfile: PolicyService/Dockerfile  
+    environment:
+      - DB_HOST=policyservice-db  
+      - DB_NAME=PolicyService  
+      - DB_USERNAME=sa  
+      - DB_SA_PASSWORD=Hamilton23@ 
+    ports:
+      - "8081:80" 
+    depends_on:
+      - policyservice-db 
     networks:
      - backend
 
