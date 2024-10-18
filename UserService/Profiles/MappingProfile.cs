@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using UserService.DTOs;
 using UserService.Entities;
+using UserService.Models.DTOs;
+using UserService.Models.ViewModels;
 
 namespace UserService.Profiles
 {
@@ -9,7 +10,9 @@ namespace UserService.Profiles
         public MappingProfile()
         {
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, UserVm>().ReverseMap();
             CreateMap<Role, RoleDto>().ReverseMap();
+            CreateMap<Role, RoleVm>().ReverseMap();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UserService.DTOs;
+using UserService.Models.DTOs;
 using UserService.Responses;
 using UserService.Services.Implementations;
 using UserService.Services.Interfaces;

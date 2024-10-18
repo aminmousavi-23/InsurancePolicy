@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using UserService.Entities;
 
-namespace UserService.DTOs
+namespace UserService.Models.DTOs
 {
     public class UserDto
     {

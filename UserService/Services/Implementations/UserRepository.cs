@@ -1,41 +1,45 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using UserService.Data;
-using UserService.DTOs;
 using UserService.Entities;
+using UserService.Models.DTOs;
+using UserService.Models.ViewModels;
 using UserService.Responses;
 using UserService.Services.Interfaces;
 
 namespace UserService.Services.Implementations
 {
-    public class UserRepository(UserContext context, IMapper mapper, IPasswordHasherService passwordHasherService) : IUserRepository
+    public class UserRepository(UserContext context, IMapper mapper, IPasswordHasherService passwordHasherService)
+        : IUserRepository
     {
         private readonly UserContext _context = context;
         private readonly IMapper _mapper = mapper;
         private readonly IPasswordHasherService _passwordHasherService = passwordHasherService;
 
-        public async Task<BaseResponse<IList<User>>> GetAllAsync()
+        public async Task<BaseResponse<IList<UserVm>>> GetAllAsync()
         {
             try
             {
-                var users = await _context.Users.ToListAsync();
+                var users = await _context.Users
+                    .Include(u => u.Role)
+                    .ToListAsync();
                 if (users == null)
-                    return new BaseResponse<IList<User>>
+                    return new BaseResponse<IList<UserVm>>
                     {
                         IsSuccess = false,
                         Message = "There is no Users",
                         Result = null
                     };
-                return new BaseResponse<IList<User>>
+                return new BaseResponse<IList<UserVm>>
                 {
                     IsSuccess = true,
                     Message = "",
-                    Result = users
+                    Result = _mapper.Map<IList<UserVm>>(users)
                 };
             }
             catch(Exception ex) 
             {
-                return new BaseResponse<IList<User>>
+                return new BaseResponse<IList<UserVm>>
                 {
                     IsSuccess = false,
                     Message = ex.Message,
@@ -44,28 +48,30 @@ namespace UserService.Services.Implementations
             }
         }
 
-        public async Task<BaseResponse<User>> GetByIdAsync(Guid id)
+        public async Task<BaseResponse<UserVm>> GetByIdAsync(Guid id)
         {
             try
             {
-                var user = await _context.Users.FindAsync(id);
+                var user = await _context.Users
+                    .Include (u => u.Role)
+                    .FirstOrDefaultAsync(u => u.Id == id);
                 if (user == null)
-                    return new BaseResponse<User>
+                    return new BaseResponse<UserVm>
                     {
                         IsSuccess = false,
                         Message = "User was not found",
                         Result = null
                     };
-                return new BaseResponse<User>
+                return new BaseResponse<UserVm>
                 {
                     IsSuccess = true,
                     Message = "",
-                    Result = user
+                    Result = _mapper.Map<UserVm>(user)
                 };
             }
             catch (Exception ex)
             {
-                return new BaseResponse<User>
+                return new BaseResponse<UserVm>
                 {
                     IsSuccess = false,
                     Message = ex.Message,
@@ -145,7 +151,7 @@ namespace UserService.Services.Implementations
                 {
                     IsSuccess = true,
                     Message = "User has been updated successfully",
-                    Result = $"User Id : {user.Id}"
+                    Result = null
                 };
             }
             catch (Exception ex)

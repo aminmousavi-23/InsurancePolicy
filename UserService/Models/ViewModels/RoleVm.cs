@@ -1,6 +1,6 @@
-﻿namespace UserService.DTOs
+﻿namespace UserService.Models.ViewModels
 {
-    public class RoleDto
+    public class RoleVm
     {
         public Guid Id { get; set; }
         public string RoleName { get; set; }

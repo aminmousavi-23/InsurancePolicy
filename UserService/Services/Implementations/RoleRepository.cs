@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using UserService.Data;
-using UserService.DTOs;
 using UserService.Entities;
+using UserService.Models.DTOs;
+using UserService.Models.ViewModels;
 using UserService.Responses;
 using UserService.Services.Interfaces;
 
@@ -12,28 +13,28 @@ namespace UserService.Services.Implementations
     {
         private readonly UserContext _context = context;
         private readonly IMapper _mapper = mapper;
-        public async Task<BaseResponse<IList<Role>>> GetAllAsync()
+        public async Task<BaseResponse<IList<RoleVm>>> GetAllAsync()
         {
             try
             {
                 var roles = await _context.Roles.ToListAsync();
                 if (roles == null)
-                    return new BaseResponse<IList<Role>>
+                    return new BaseResponse<IList<RoleVm>>
                     {
                         IsSuccess = false,
                         Message = "There is no Roles",
                         Result = null
                     };
-                return new BaseResponse<IList<Role>>
+                return new BaseResponse<IList<RoleVm>>
                 {
                     IsSuccess = true,
                     Message = "",
-                    Result = roles
+                    Result = _mapper.Map<IList<RoleVm>>(roles)
                 };
             }
             catch (Exception ex)
             {
-                return new BaseResponse<IList<Role>>
+                return new BaseResponse<IList<RoleVm>>
                 {
                     IsSuccess = false,
                     Message = ex.Message,
@@ -42,28 +43,28 @@ namespace UserService.Services.Implementations
             }
         }
 
-        public async Task<BaseResponse<Role>> GetByIdAsync(Guid id)
+        public async Task<BaseResponse<RoleVm>> GetByIdAsync(Guid id)
         {
             try
             {
                 var role = await _context.Roles.FindAsync(id);
                 if (role == null)
-                    return new BaseResponse<Role>
+                    return new BaseResponse<RoleVm>
                     {
                         IsSuccess = false,
                         Message = "Role was not found",
                         Result = null
                     };
-                return new BaseResponse<Role>
+                return new BaseResponse<RoleVm>
                 {
                     IsSuccess = true,
                     Message = "",
-                    Result = role
+                    Result = _mapper.Map<RoleVm>(role)
                 };
             }
             catch (Exception ex)
             {
-                return new BaseResponse<Role>
+                return new BaseResponse<RoleVm>
                 {
                     IsSuccess = false,
                     Message = ex.Message,
@@ -129,7 +130,7 @@ namespace UserService.Services.Implementations
                 {
                     IsSuccess = true,
                     Message = "Role has been updated successfully",
-                    Result = $"Role Id : {role.Id}"
+                    Result = null
                 };
             }
             catch (Exception ex)
