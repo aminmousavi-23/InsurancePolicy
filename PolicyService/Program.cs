@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using PolicyService.Data;
 using PolicyService.Profiles;
+using PolicyService.Services.Implementations;
+using PolicyService.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,8 @@ builder.Services.AddDbContext<PolicyContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
 
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
