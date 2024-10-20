@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using UserService.Data;
 using UserService.Entities;
 using UserService.Models.DTOs;
+using UserService.Models.DTOs.Validators;
 using UserService.Models.ViewModels;
 using UserService.Responses;
 using UserService.Services.Interfaces;
@@ -83,6 +84,24 @@ namespace UserService.Services.Implementations
         {
             try
             {
+                var validator = new RoleValidator();
+                var validatorResult = await validator.ValidateAsync(roleDto);
+
+                if (validatorResult.Errors.Any())
+                {
+                    var errors = new List<string>();
+                    foreach (var error in validatorResult.Errors)
+                        errors.Add(error.ErrorMessage);
+
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Bad Request",
+                        Result = errors
+                    };
+                }
+
+
                 var existedRole = await _context.Roles
                     .AnyAsync(w => w.RoleName == roleDto.RoleName);
                 if (existedRole == true)
@@ -124,6 +143,24 @@ namespace UserService.Services.Implementations
         {
             try
             {
+                var validator = new RoleValidator();
+                var validatorResult = await validator.ValidateAsync(roleDto);
+
+                if (validatorResult.Errors.Any())
+                {
+                    var errors = new List<string>();
+                    foreach (var error in validatorResult.Errors)
+                        errors.Add(error.ErrorMessage);
+
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Bad Request",
+                        Result = errors
+                    };
+                }
+
+
                 var role = await _context.Roles.FindAsync(roleDto.Id);
                 if (role == null)
                     return new BaseResponse

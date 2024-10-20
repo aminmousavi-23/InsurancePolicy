@@ -28,8 +28,6 @@ services:
       - DB_NAME=UserService  
       - DB_USERNAME=sa  
       - DB_SA_PASSWORD=Hamilton23@  
-    ports:
-      - "8080:80"
     depends_on:
       - userservice-db 
     networks:
@@ -58,8 +56,6 @@ services:
       - DB_NAME=PolicyService  
       - DB_USERNAME=sa  
       - DB_SA_PASSWORD=Hamilton23@ 
-    ports:
-      - "8081:80" 
     depends_on:
       - policyservice-db 
     networks:

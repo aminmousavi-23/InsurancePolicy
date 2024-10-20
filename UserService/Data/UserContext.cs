@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore;
-using UserService.Entities;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using UserService.Entities.UserToken;
+using UserService.Entities;
 
 namespace UserService.Data;
 

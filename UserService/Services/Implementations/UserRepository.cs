@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using UserService.Data;
 using UserService.Entities;
 using UserService.Models.DTOs;
+using UserService.Models.DTOs.Validators;
 using UserService.Models.ViewModels;
 using UserService.Responses;
 using UserService.Services.Interfaces;
@@ -89,6 +90,24 @@ namespace UserService.Services.Implementations
         {
             try
             {
+                var validator = new UserValidator();
+                var validatorResult = await validator.ValidateAsync(userDto);
+
+                if (validatorResult.Errors.Any())
+                {
+                    var errors = new List<string>();
+                    foreach (var error in validatorResult.Errors)
+                        errors.Add(error.ErrorMessage);
+
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Bad Request",
+                        Result = errors
+                    };
+                }
+
+
                 var existedPhoneNumber = await _context.Users
                     .AnyAsync(w => w.PhoneNumber == userDto.PhoneNumber);
                 if (existedPhoneNumber == true)
@@ -152,6 +171,24 @@ namespace UserService.Services.Implementations
         {
             try
             {
+                var validator = new UserValidator();
+                var validatorResult = await validator.ValidateAsync(userDto);
+
+                if (validatorResult.Errors.Any())
+                {
+                    var errors = new List<string>();
+                    foreach (var error in validatorResult.Errors)
+                        errors.Add(error.ErrorMessage);
+
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Bad Request",
+                        Result = errors
+                    };
+                }
+
+
                 var user = await _context.Users.FindAsync(userDto.Id);
                 if (user == null)
                     return new BaseResponse

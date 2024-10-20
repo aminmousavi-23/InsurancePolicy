@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using UserService.Data;
 using UserService.Entities;
 using UserService.Models.DTOs;
+using UserService.Models.DTOs.Validators;
 using UserService.Models.ViewModels;
 using UserService.Responses;
 using UserService.Services.Interfaces;
@@ -83,6 +84,24 @@ namespace UserService.Services.Implementations
         {
             try
             {
+                var validator = new UserProfileValidator();
+                var validatorResult = await validator.ValidateAsync(userProfileDto);
+
+                if (validatorResult.Errors.Any())
+                {
+                    var errors = new List<string>();
+                    foreach (var error in validatorResult.Errors)
+                        errors.Add(error.ErrorMessage);
+
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Bad Request",
+                        Result = errors
+                    };
+                }
+
+
                 var existedUserProfile = await _context.UserProfiles
                     .AnyAsync(w => w.UserId == userProfileDto.UserId);
                 if (existedUserProfile == true)
@@ -124,6 +143,23 @@ namespace UserService.Services.Implementations
         {
             try
             {
+                var validator = new UserProfileValidator();
+                var validatorResult = await validator.ValidateAsync(userProfileDto);
+
+                if (validatorResult.Errors.Any())
+                {
+                    var errors = new List<string>();
+                    foreach (var error in validatorResult.Errors)
+                        errors.Add(error.ErrorMessage);
+
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Bad Request",
+                        Result = errors
+                    };
+                }
+
                 var userProfile = await _context.UserProfiles.FindAsync(userProfileDto.Id);
                 if (userProfile == null)
                     return new BaseResponse
