@@ -21,13 +21,6 @@ namespace UserService.Services.Implementations
             try
             {
                 var userProfiles = await _context.UserProfiles.ToListAsync();
-                if (userProfiles == null)
-                    return new BaseResponse<IList<UserProfileVm>>
-                    {
-                        IsSuccess = false,
-                        Message = "There is no UserProfiles",
-                        Result = null
-                    };
                 return new BaseResponse<IList<UserProfileVm>>
                 {
                     IsSuccess = true,

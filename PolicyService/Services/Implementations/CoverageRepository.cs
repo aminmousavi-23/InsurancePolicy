@@ -21,13 +21,6 @@ public class CoverageRepository(PolicyContext context, IMapper mapper) : ICovera
         try
         {
             var coverages = await _context.Coverages.ToListAsync();
-            if (coverages == null)
-                return new BaseResponse<IList<CoverageVm>>
-                {
-                    IsSuccess = false,
-                    Message = "There is no Coverages",
-                    Result = null
-                };
             return new BaseResponse<IList<CoverageVm>>
             {
                 IsSuccess = true,

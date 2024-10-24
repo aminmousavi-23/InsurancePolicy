@@ -21,13 +21,6 @@ namespace UserService.Services.Implementations
             try
             {
                 var roles = await _context.Roles.ToListAsync();
-                if (roles == null)
-                    return new BaseResponse<IList<RoleVm>>
-                    {
-                        IsSuccess = false,
-                        Message = "There is no Roles",
-                        Result = null
-                    };
                 return new BaseResponse<IList<RoleVm>>
                 {
                     IsSuccess = true,

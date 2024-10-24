@@ -25,13 +25,6 @@ namespace UserService.Services.Implementations
                 var users = await _context.Users
                     .Include(u => u.Role)
                     .ToListAsync();
-                if (users == null)
-                    return new BaseResponse<IList<UserVm>>
-                    {
-                        IsSuccess = false,
-                        Message = "There is no Users",
-                        Result = null
-                    };
                 return new BaseResponse<IList<UserVm>>
                 {
                     IsSuccess = true,

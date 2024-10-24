@@ -21,13 +21,6 @@ public class PolicyTypeRepository(PolicyContext context, IMapper mapper) : IPoli
         try
         {
             var policyTypes = await _context.PolicyTypes.ToListAsync();
-            if (policyTypes == null)
-                return new BaseResponse<IList<PolicyTypeVm>>
-                {
-                    IsSuccess = false,
-                    Message = "There is no Policy Types",
-                    Result = null
-                };
             return new BaseResponse<IList<PolicyTypeVm>>
             {
                 IsSuccess = true,
