@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PolicyService.Data;
 using PolicyService.Entities;
 using PolicyService.Models.DTOs;
+using PolicyService.Models.DTOs.Validators;
 using PolicyService.Models.ViewModels;
 using PolicyService.Responses;
 using PolicyService.Services.Interfaces;
@@ -84,6 +85,23 @@ namespace PolicyService.Services.Implementations
         {
             try
             {
+                var validator = new PolicyTypeValidator();
+                var validatorResult = await validator.ValidateAsync(policyTypeDto);
+
+                if (validatorResult.Errors.Any())
+                {
+                    var errors = new List<string>();
+                    foreach(var error in validatorResult.Errors)
+                        errors.Add(error.ErrorMessage);
+
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "BadRequest",
+                        Result = errors
+                    };
+                }
+
                 var existedPolicyType = await _context.PolicyTypes
                 .AnyAsync(w => w.Name == policyTypeDto.Name);
                 if (existedPolicyType)
@@ -125,6 +143,23 @@ namespace PolicyService.Services.Implementations
         {
             try
             {
+                var validator = new PolicyTypeValidator();
+                var validatorResult = await validator.ValidateAsync(policyTypeDto);
+
+                if (validatorResult.Errors.Any())
+                {
+                    var errors = new List<string>();
+                    foreach (var error in validatorResult.Errors)
+                        errors.Add(error.ErrorMessage);
+
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "BadRequest",
+                        Result = errors
+                    };
+                }
+
                 var policyType = await _context.PolicyTypes
                 .FindAsync(policyTypeDto.Id);
                 if (policyType == null)
