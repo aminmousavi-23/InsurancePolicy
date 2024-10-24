@@ -1,43 +1,43 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using PolicyService.Data;
 using PolicyService.Entities;
-using PolicyService.Models.DTOs;
 using PolicyService.Models.DTOs.Validators;
+using PolicyService.Models.DTOs;
 using PolicyService.Models.ViewModels;
-using PolicyService.Responses;
 using PolicyService.Services.Interfaces;
+using PolicyService.Responses;
+using Microsoft.EntityFrameworkCore;
 
 namespace PolicyService.Services.Implementations;
 
-public class PolicyTypeRepository(PolicyContext context, IMapper mapper) : IPolicyTypeRepository
+public class CoverageRepository(PolicyContext context, IMapper mapper) : ICoverageRepository
 {
     private readonly PolicyContext _context = context;
     private readonly IMapper _mapper = mapper;
 
     #region GetAllAsync
-    public async Task<BaseResponse<IList<PolicyTypeVm>>> GetAllAsync()
+    public async Task<BaseResponse<IList<CoverageVm>>> GetAllAsync()
     {
         try
         {
-            var policyTypes = await _context.PolicyTypes.ToListAsync();
-            if (policyTypes == null)
-                return new BaseResponse<IList<PolicyTypeVm>>
+            var coverages = await _context.Coverages.ToListAsync();
+            if (coverages == null)
+                return new BaseResponse<IList<CoverageVm>>
                 {
                     IsSuccess = false,
-                    Message = "There is no Policy Types",
+                    Message = "There is no Coverages",
                     Result = null
                 };
-            return new BaseResponse<IList<PolicyTypeVm>>
+            return new BaseResponse<IList<CoverageVm>>
             {
                 IsSuccess = true,
                 Message = "",
-                Result = _mapper.Map<IList<PolicyTypeVm>>(policyTypes)
+                Result = _mapper.Map<IList<CoverageVm>>(coverages)
             };
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            return new BaseResponse<IList<PolicyTypeVm>>
+            return new BaseResponse<IList<CoverageVm>>
             {
                 IsSuccess = false,
                 Message = ex.Message,
@@ -48,29 +48,29 @@ public class PolicyTypeRepository(PolicyContext context, IMapper mapper) : IPoli
     #endregion
 
     #region GetByIdAsync
-    public async Task<BaseResponse<PolicyTypeVm>> GetByIdAsync(Guid id)
+    public async Task<BaseResponse<CoverageVm>> GetByIdAsync(Guid id)
     {
         try
         {
-            var policyType = await _context.PolicyTypes.FindAsync(id);
-            if (policyType == null)
-                return new BaseResponse<PolicyTypeVm>
+            var coverage = await _context.Coverages.FindAsync(id);
+            if (coverage == null)
+                return new BaseResponse<CoverageVm>
                 {
                     IsSuccess = false,
-                    Message = "There is no Policy Type with this id",
+                    Message = "There is no Coverage with this id",
                     Result = null
                 };
 
-            return new BaseResponse<PolicyTypeVm>
+            return new BaseResponse<CoverageVm>
             {
                 IsSuccess = true,
                 Message = "",
-                Result = _mapper.Map<PolicyTypeVm>(policyType)
+                Result = _mapper.Map<CoverageVm>(coverage)
             };
         }
         catch (Exception ex)
         {
-            return new BaseResponse<PolicyTypeVm>
+            return new BaseResponse<CoverageVm>
             {
                 IsSuccess = false,
                 Message = ex.Message,
@@ -81,19 +81,19 @@ public class PolicyTypeRepository(PolicyContext context, IMapper mapper) : IPoli
     #endregion
 
     #region AddAsync
-    public async Task<BaseResponse> AddAsync(PolicyTypeDto policyTypeDto)
+    public async Task<BaseResponse> AddAsync(CoverageDto coverageDto)
     {
         try
         {
-            var validator = new PolicyTypeValidator();
-            var validatorResult = await validator.ValidateAsync(policyTypeDto);
-
+            var validator = new CoverageValidator();
+            var validatorResult = await validator.ValidateAsync(coverageDto);
+            
             if (validatorResult.Errors.Any())
             {
                 var errors = new List<string>();
-                foreach(var error in validatorResult.Errors)
+                foreach (var error in validatorResult.Errors)
                     errors.Add(error.ErrorMessage);
-
+            
                 return new BaseResponse
                 {
                     IsSuccess = false,
@@ -102,31 +102,41 @@ public class PolicyTypeRepository(PolicyContext context, IMapper mapper) : IPoli
                 };
             }
 
-            var existedPolicyType = await _context.PolicyTypes
-            .AnyAsync(w => w.Name == policyTypeDto.Name);
-            if (existedPolicyType)
+            var existedCoverage = await _context.Coverages
+            .AnyAsync(w => w.CoverageName == coverageDto.CoverageName);
+            if (existedCoverage)
                 return new BaseResponse
                 {
                     IsSuccess = false,
-                    Message = "This Policy Type already existed",
+                    Message = "This Coverage already existed",
                     Result = null
                 };
 
-            var newPolicyType = _mapper.Map<PolicyType>(policyTypeDto);
+            var existedPolicy = await _context.Policies
+                .AnyAsync(w => w.Id ==  coverageDto.PolicyId);
+            if (existedPolicy == false)
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "This PolicyId is not existed",
+                    Result = null
+                };
 
-            newPolicyType.Id = Guid.NewGuid();
+            var newCoverage = _mapper.Map<Coverage>(coverageDto);
 
-            await _context.AddAsync(newPolicyType);
+            newCoverage.Id = Guid.NewGuid();
+
+            await _context.AddAsync(newCoverage);
             await _context.SaveChangesAsync();
 
             return new BaseResponse
             {
                 IsSuccess = true,
-                Message = "Policy Type has been created successfully",
-                Result = $"Policy Type Id : {newPolicyType.Id}"
+                Message = "Coverage has been created successfully",
+                Result = $"Coverage Id : {newCoverage.Id}"
             };
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return new BaseResponse
             {
@@ -139,19 +149,19 @@ public class PolicyTypeRepository(PolicyContext context, IMapper mapper) : IPoli
     #endregion
 
     #region UpdateAsync
-    public async Task<BaseResponse> UpdateAsync(PolicyTypeDto policyTypeDto)
+    public async Task<BaseResponse> UpdateAsync(CoverageDto coverageDto)
     {
         try
         {
-            var validator = new PolicyTypeValidator();
-            var validatorResult = await validator.ValidateAsync(policyTypeDto);
-
+            var validator = new CoverageValidator();
+            var validatorResult = await validator.ValidateAsync(coverageDto);
+            
             if (validatorResult.Errors.Any())
             {
                 var errors = new List<string>();
                 foreach (var error in validatorResult.Errors)
                     errors.Add(error.ErrorMessage);
-
+            
                 return new BaseResponse
                 {
                     IsSuccess = false,
@@ -160,25 +170,25 @@ public class PolicyTypeRepository(PolicyContext context, IMapper mapper) : IPoli
                 };
             }
 
-            var policyType = await _context.PolicyTypes
-            .FindAsync(policyTypeDto.Id);
-            if (policyType == null)
+            var coverage = await _context.Coverages
+            .FindAsync(coverageDto.Id);
+            if (coverage == null)
                 return new BaseResponse
                 {
                     IsSuccess = false,
-                    Message = "Policy Type was not found",
+                    Message = "Coverage was not found",
                     Result = null
                 };
 
-            _mapper.Map(policyTypeDto, policyType);
+            _mapper.Map(coverageDto, coverage);
 
-            _context.PolicyTypes.Update(policyType);
+            _context.Coverages.Update(coverage);
             await _context.SaveChangesAsync();
 
             return new BaseResponse
             {
                 IsSuccess = true,
-                Message = "Policy Type has been updated successfully",
+                Message = "Coverage has been updated successfully",
                 Result = null
             };
         }
@@ -199,23 +209,23 @@ public class PolicyTypeRepository(PolicyContext context, IMapper mapper) : IPoli
     {
         try
         {
-            var policyType = await _context.PolicyTypes
+            var coverage = await _context.Coverages
             .FindAsync(id);
-            if (policyType == null)
+            if (coverage == null)
                 return new BaseResponse
                 {
                     IsSuccess = false,
-                    Message = "Policy Type was not found",
+                    Message = "Coverage was not found",
                     Result = null
                 };
 
-            _context.Remove(policyType);
+            _context.Remove(coverage);
             await _context.SaveChangesAsync();
 
             return new BaseResponse
             {
                 IsSuccess = true,
-                Message = "PolicyType has been deleted successfully",
+                Message = "Coverage has been deleted successfully",
                 Result = null
             };
         }

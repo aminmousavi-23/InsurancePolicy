@@ -17,6 +17,9 @@ namespace PolicyService.Profiles
 
             CreateMap<PolicyType, PolicyTypeDto>().ReverseMap();
             CreateMap<PolicyType, PolicyTypeVm>().ReverseMap();
+
+            CreateMap<Coverage, CoverageDto>().ReverseMap();
+            CreateMap<Coverage, CoverageVm>().ReverseMap();
         }
     }
 }

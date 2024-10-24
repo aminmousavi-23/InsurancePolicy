@@ -26,6 +26,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
 builder.Services.AddScoped<IPolicyTypeRepository, PolicyTypeRepository>();
+builder.Services.AddScoped<ICoverageRepository, CoverageRepository>();
 
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
