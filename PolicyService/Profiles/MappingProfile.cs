@@ -14,6 +14,9 @@ namespace PolicyService.Profiles
 
             CreateMap<Claim, ClaimDto>().ReverseMap();
             CreateMap<Claim, ClaimVm>().ReverseMap();
+
+            CreateMap<PolicyType, PolicyTypeDto>().ReverseMap();
+            CreateMap<PolicyType, PolicyTypeVm>().ReverseMap();
         }
     }
 }

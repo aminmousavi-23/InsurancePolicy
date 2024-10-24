@@ -25,6 +25,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
+builder.Services.AddScoped<IPolicyTypeRepository, PolicyTypeRepository>();
 
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));

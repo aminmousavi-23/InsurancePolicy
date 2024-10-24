@@ -104,7 +104,7 @@ namespace UserService.Services.Implementations
 
                 var existedRole = await _context.Roles
                     .AnyAsync(w => w.RoleName == roleDto.RoleName);
-                if (existedRole == true)
+                if (existedRole)
                     return new BaseResponse
                     {
                         IsSuccess = false,

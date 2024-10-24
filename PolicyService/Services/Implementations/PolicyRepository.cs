@@ -136,6 +136,15 @@ namespace PolicyService.Services.Implementations
                     };
                 }
 
+                var existedPolicyType = await _context.PolicyTypes
+                    .AnyAsync(w => w.Id == policyDto.PolicyTypeId);
+                if (existedPolicyType == false)
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "This Policy Type is not existed",
+                        Result = null
+                    };
 
                 var newPolicy = _mapper.Map<Policy>(policyDto);
 
@@ -195,6 +204,16 @@ namespace PolicyService.Services.Implementations
                     {
                         IsSuccess = false,
                         Message = "Policy was not found",
+                        Result = null
+                    };
+
+                var existedPolicyType = await _context.PolicyTypes
+                    .AnyAsync(w => w.Id == policyDto.PolicyTypeId);
+                if (existedPolicyType == false)
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "This Policy Type is not existed",
                         Result = null
                     };
 
