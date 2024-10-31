@@ -5,6 +5,17 @@ networks:
 
 services:
 
+  apigateway:
+    container_name: apigateway
+    image: ${DOCKER_REGISTRY-}apigateway  
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile  
+    ports:
+      - "5000:80" 
+    networks:
+     - backend
+
   userservice-db:
     container_name: userservice-db
     image: mcr.microsoft.com/mssql/server:2019-latest 
@@ -28,6 +39,8 @@ services:
       - DB_NAME=UserService  
       - DB_USERNAME=sa  
       - DB_SA_PASSWORD=Hamilton23@  
+    ports:
+      - 4140:80
     depends_on:
       - userservice-db 
     networks:
@@ -56,8 +69,40 @@ services:
       - DB_NAME=PolicyService  
       - DB_USERNAME=sa  
       - DB_SA_PASSWORD=Hamilton23@ 
+    ports:
+      - 4141:80
     depends_on:
       - policyservice-db 
+    networks:
+     - backend
+   
+  paymentservice-db:
+    container_name: paymentservice-db
+    image: mcr.microsoft.com/mssql/server:2019-latest 
+    environment:
+      - SA_PASSWORD=Hamilton23@
+      - ACCEPT_EULA=Y  
+      - MSSQL_PID=Evaluation
+    ports:
+      - "6003:1433" 
+    networks:
+     - backend
+
+  paymentservice:
+    container_name: paymentservice
+    image: ${DOCKER_REGISTRY-}paymentservice  
+    build:
+      context: .
+      dockerfile: PaymentService/Dockerfile  
+    environment:
+      - DB_HOST=paymentservice-db  
+      - DB_NAME=PaymentService  
+      - DB_USERNAME=sa  
+      - DB_SA_PASSWORD=Hamilton23@ 
+    ports:
+      - 4142:80
+    depends_on:
+      - paymentservice-db 
     networks:
      - backend
 

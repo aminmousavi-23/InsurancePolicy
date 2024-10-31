@@ -4,10 +4,10 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
+        "apigateway": "StartDebugging",
         "userservice": "StartDebugging",
         "policyservice": "StartDebugging",
-        "policyservice-db": "StartWithoutDebugging",
-        "userservice-db": "StartWithoutDebugging"
+        "paymentservice": "StartDebugging"
       }
     }
   }

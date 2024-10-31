@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using PolicyService.Data;
-using PolicyService.Profiles;
-using PolicyService.Services.Implementations;
-using PolicyService.Services.Interfaces;
+using PaymentService.Data;
+using PaymentService.Profiles;
+using PaymentService.Services.Implementations;
+using PaymentService.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,22 +13,18 @@ string databaseUsername = Environment.GetEnvironmentVariable("DB_USERNAME");
 string databasePassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
 string databaseConnectionString = $"Data Source={databaseHost};Initial Catalog={databaseName};User ID={databaseUsername};Password={databasePassword};TrustServerCertificate=True;";
 
-builder.Services.AddDbContext<PolicyContext>(options =>
+builder.Services.AddDbContext<PaymentContext>(options =>
 {
     options.UseSqlServer(databaseConnectionString);
 });
-#endregion 
+#endregion
 
 #region Services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
-builder.Services.AddScoped<IPolicyTypeRepository, PolicyTypeRepository>();
-builder.Services.AddScoped<ICoverageRepository, CoverageRepository>();
-builder.Services.AddScoped<IClaimRepository, ClaimRepository>();
-
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 #endregion
