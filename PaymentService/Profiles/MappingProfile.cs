@@ -11,5 +11,9 @@ public class MappingProfile : Profile
     {
         CreateMap<Payment, PaymentDto>().ReverseMap();
         CreateMap<Payment, PaymentVm>().ReverseMap();
+
+        CreateMap<PaymentMethod, PaymentMethodDto>().ReverseMap();
+        CreateMap<PaymentMethod, PaymentMethodVm>().ReverseMap();
+
     }
 }

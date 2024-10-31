@@ -9,7 +9,7 @@ public class PaymentVm
     public decimal Amount { get; set; }
     public DateTime PaymentDate { get; set; }
     public PaymentStatus Status { get; set; }
-    public string TransactionId { get; set; }
+    public string TransactionNumber { get; set; }
     public PaymentMethod PaymentMethod { get; set; }
     public string Description { get; set; }
 }

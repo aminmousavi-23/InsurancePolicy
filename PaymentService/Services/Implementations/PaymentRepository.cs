@@ -145,8 +145,8 @@ public class PaymentRepository(PaymentContext context, IMapper mapper) : IPaymen
             //        Result = null
             //    };
 
-            var paymentMethod = await _context.Payments
-                .FirstOrDefaultAsync(w => w.PaymentMethod.Id == paymentDto.PaymentMethodId);
+            var paymentMethod = await _context.PaymentMethods
+                .FirstOrDefaultAsync(w => w.Id == paymentDto.PaymentMethodId);
             if (paymentMethod == null)
                 return new BaseResponse
                 {
