@@ -6,7 +6,7 @@ namespace PolicyService.Models.ViewModels
     {
         public Guid Id { get; set; }
         public string PolicyNumber { get; set; }
-        public Guid CustomerId { get; set; }
+        public Guid UserId { get; set; }
         public Guid PolicyTypeId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace PolicyService.Entities
 {
-    public class PolicyHistory
+    public class PolicyHistory  //TODO
     {
         public Guid Id { get; set; } 
         public Guid PolicyId { get; set; } 
