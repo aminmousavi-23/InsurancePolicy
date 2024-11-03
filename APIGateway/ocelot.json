@@ -89,7 +89,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/policy/",
+      "UpstreamPathTemplate": "/policy",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -126,7 +126,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/policytype/",
+      "UpstreamPathTemplate": "/policytype",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -151,7 +151,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/coverage/",
+      "UpstreamPathTemplate": "/coverage",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -176,7 +176,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/claim/",
+      "UpstreamPathTemplate": "/claim",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -202,8 +202,73 @@
       ],
       "UpstreamPathTemplate": "/claim/claimnumber",
       "UpstreamHttpMethod": [ "GET" ]
-    }
+    },
     //---------------------------------PolicyService----------------------------------------End
+
+    //---------------------------------PaymentService----------------------------------------
+    //Payment
+
+    {
+      "DownstreamPathTemplate": "/payment",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "paymentservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/payment",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/payment/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "paymentservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/payment/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/payment/transactionNumber",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "paymentservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/payment/transactionNumber",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    //PaymentMethod
+    {
+      "DownstreamPathTemplate": "/paymentmethod",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "paymentservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/paymentmethod",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/paymentmethod/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "paymentservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/paymentmethod/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    }
   ],
 
   "GlobalConfiguration": {
