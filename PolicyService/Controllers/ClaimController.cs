@@ -36,7 +36,7 @@ namespace PolicyService.Controllers
             });
         }
 
-        [HttpGet("{ClaimNumber}")]
+        [HttpGet("calimNumber/{claimNumber}")]
         public async Task<IActionResult> Get(string claimNumber)
         {
             var result = await _claimRepository.GetByClaimNumberAsync(claimNumber);

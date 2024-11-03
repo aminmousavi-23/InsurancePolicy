@@ -35,7 +35,7 @@ namespace PolicyService.Controllers
             });
         }
 
-        [HttpGet("{PolicyNumber}")]
+        [HttpGet("policynumber/{policyNumber}")]
         public async Task<IActionResult> Get(string policyNumber)
         {
             var result = await _policyRepository.GetByPolicyNumberAsync(policyNumber);
