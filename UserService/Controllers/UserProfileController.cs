@@ -24,7 +24,7 @@ namespace UserService.Controllers
             });
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await _userProfileRepository.GetByIdAsync(id);

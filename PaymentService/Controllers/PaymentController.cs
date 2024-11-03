@@ -23,7 +23,7 @@ public class PaymentController(IPaymentRepository paymentRepository) : Controlle
         });
     }
 
-    [HttpGet("id")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> Get(Guid id)
     {
         var result = await _paymentRepository.GetByIdAsync(id);
@@ -35,7 +35,7 @@ public class PaymentController(IPaymentRepository paymentRepository) : Controlle
         });
     }
 
-    [HttpGet("TransactionNumber")]
+    [HttpGet("{TransactionNumber}")]
     public async Task<IActionResult> Get(string transactionNumber)
     {
         var result = await _paymentRepository.GetByTransactionNumberAsync(transactionNumber);

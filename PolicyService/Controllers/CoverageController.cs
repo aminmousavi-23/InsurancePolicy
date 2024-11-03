@@ -23,7 +23,7 @@ public class CoverageController(ICoverageRepository coverageRepository) : Contro
         });
     }
 
-    [HttpGet("id")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> Get(Guid id)
     {
         var result = await _coverageRepository.GetByIdAsync(id);

@@ -23,7 +23,7 @@ namespace PolicyService.Controllers
             });
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await _policyRepository.GetByIdAsync(id);
@@ -35,7 +35,7 @@ namespace PolicyService.Controllers
             });
         }
 
-        [HttpGet("PolicyNumber")]
+        [HttpGet("{PolicyNumber}")]
         public async Task<IActionResult> Get(string policyNumber)
         {
             var result = await _policyRepository.GetByPolicyNumberAsync(policyNumber);

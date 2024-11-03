@@ -22,7 +22,7 @@ public class PaymentMethodController(IPaymentMethodRepository paymentMethodRepos
         });
     }
 
-    [HttpGet("id")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> Get(Guid id)
     {
         var result = await _paymentMethodRepository.GetByIdAsync(id);

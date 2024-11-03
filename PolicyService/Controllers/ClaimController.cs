@@ -24,7 +24,7 @@ namespace PolicyService.Controllers
             });
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await _claimRepository.GetByIdAsync(id);
@@ -36,7 +36,7 @@ namespace PolicyService.Controllers
             });
         }
 
-        [HttpGet("ClaimNumber")]
+        [HttpGet("{ClaimNumber}")]
         public async Task<IActionResult> Get(string claimNumber)
         {
             var result = await _claimRepository.GetByClaimNumberAsync(claimNumber);
