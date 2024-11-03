@@ -1,11 +1,9 @@
-﻿namespace PolicyService.Entities
-{
-    public enum ClaimStatus
-    {
-        Submitted, 
-        UnderReview, 
-        Approved, 
-        Rejected 
-    }
+﻿namespace PolicyService.Entities;
 
+public enum ClaimStatus
+{
+    Submitted, 
+    UnderReview, 
+    Approved, 
+    Rejected 
 }

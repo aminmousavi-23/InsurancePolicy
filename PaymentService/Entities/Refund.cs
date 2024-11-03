@@ -1,6 +1,6 @@
 ﻿namespace PaymentService.Entities;
 
-public class Refund
+public class Refund //TODO
 {
     public Guid Id { get; set; } 
     public Guid PaymentId { get; set; } 

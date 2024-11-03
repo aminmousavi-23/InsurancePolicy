@@ -35,7 +35,7 @@ public class PaymentController(IPaymentRepository paymentRepository) : Controlle
         });
     }
 
-    [HttpGet("{TransactionNumber}")]
+    [HttpGet("transactionNumber/{transactionNumber}")]
     public async Task<IActionResult> Get(string transactionNumber)
     {
         var result = await _paymentRepository.GetByTransactionNumberAsync(transactionNumber);

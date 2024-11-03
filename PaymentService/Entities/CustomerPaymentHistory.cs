@@ -2,7 +2,7 @@
 
 namespace PaymentService.Entities;
 
-public class CustomerPaymentHistory
+public class CustomerPaymentHistory //TODO
 {
     public Guid Id { get; set; } 
     public Guid UserId { get; set; } 

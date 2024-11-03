@@ -1,9 +1,8 @@
-﻿namespace PolicyService.Entities
+﻿namespace PolicyService.Entities;
+
+public enum PolicyStatus
 {
-    public enum PolicyStatus
-    {
-        Active,
-        Expired, 
-        Cancelled 
-    }
+    Active,
+    Expired, 
+    Cancelled 
 }

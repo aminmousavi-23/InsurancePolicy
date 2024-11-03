@@ -8,13 +8,16 @@ using PaymentService.Models.DTOs.Validators;
 using PaymentService.Models.ViewModels;
 using PaymentService.Responses;
 using PaymentService.Services.Interfaces;
+using System.Net.Http;
 
 namespace PaymentService.Services.Implementations;
 
-public class PaymentRepository(PaymentContext context, IMapper mapper) : IPaymentRepository
+public class PaymentRepository(PaymentContext context, IMapper mapper, IHttpClientFactory httpClientFactory) 
+    : IPaymentRepository
 {
     private readonly PaymentContext _context = context;
     private readonly IMapper _mapper = mapper;
+    private readonly HttpClient _httpClient = httpClientFactory.CreateClient("ExternalService");
 
     #region GetAllAsync
     public async Task<BaseResponse<IList<PaymentVm>>> GetAllAsync()
@@ -135,15 +138,16 @@ public class PaymentRepository(PaymentContext context, IMapper mapper) : IPaymen
                 };
             }
 
-            // TODO
-            //var existedCustomer = 
-            //if (existedCustomer == false)
-            //    return new BaseResponse
-            //    {
-            //        IsSuccess = false,
-            //        Message = "This Customer is not existed",
-            //        Result = null
-            //    };
+            var userResponse = await _httpClient.GetAsync($"http://userservice:80/user/{paymentDto.UserId}");
+            var user = await userResponse.Content.ReadAsStringAsync();
+
+            if (user == null)
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "User with this Id is not existed",
+                    Result = null
+                };
 
             var paymentMethod = await _context.PaymentMethods
                 .FirstOrDefaultAsync(w => w.Id == paymentDto.PaymentMethodId);
