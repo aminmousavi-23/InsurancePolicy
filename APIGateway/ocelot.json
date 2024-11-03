@@ -1,5 +1,7 @@
-  {
+{
   "Routes": [
+    //---------------------------------UserService----------------------------------------
+    //User
     {
       "DownstreamPathTemplate": "/user",
       "DownstreamScheme": "http",
@@ -9,7 +11,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/users",
+      "UpstreamPathTemplate": "/user",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -21,10 +23,10 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/users/id",
+      "UpstreamPathTemplate": "/user/id",
       "UpstreamHttpMethod": [ "GET" ]
     },
-
+    //Role
     {
       "DownstreamPathTemplate": "/role",
       "DownstreamScheme": "http",
@@ -34,7 +36,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/roles",
+      "UpstreamPathTemplate": "/role",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -46,10 +48,10 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/roles/id",
+      "UpstreamPathTemplate": "/role/id",
       "UpstreamHttpMethod": [ "GET" ]
     },
-
+    //UserProfile
     {
       "DownstreamPathTemplate": "/userprofile",
       "DownstreamScheme": "http",
@@ -59,7 +61,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/userprofiles",
+      "UpstreamPathTemplate": "/userprofile",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -71,10 +73,139 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/userprofiles/id",
-      "UpstreamHttpMethod": [ "GET"]
+      "UpstreamPathTemplate": "/userprofile/id",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    //---------------------------------UserService----------------------------------------End
+
+    //---------------------------------PolicyService----------------------------------------
+    //Policy
+    {
+      "DownstreamPathTemplate": "/policy",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "policyservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/policy/",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/policy/id",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "policyservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/policy/id",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/policy/policynumber",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "policyservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/policy/policynumber",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    //Policytype
+    {
+      "DownstreamPathTemplate": "/policytype",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "policyservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/policytype/",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/policytype/id",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "policyservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/policytype/id",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    //Coverage
+    {
+      "DownstreamPathTemplate": "/coverage",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "policyservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/coverage/",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/coverage/id",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "policyservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/coverage/id",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    //Claim
+    {
+      "DownstreamPathTemplate": "/claim",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "policyservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/claim/",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/claim/id",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "policyservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/claim/id",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/claim/claimnumber",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "policyservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/claim/claimnumber",
+      "UpstreamHttpMethod": [ "GET" ]
     }
+    //---------------------------------PolicyService----------------------------------------End
   ],
+
   "GlobalConfiguration": {
   }
 }
