@@ -12,10 +12,12 @@ using System.Runtime.InteropServices;
 
 namespace PolicyService.Services.Implementations;
 
-public class PolicyRepository(PolicyContext context, IMapper mapper) : IPolicyRepository
+public class PolicyRepository(PolicyContext context, IMapper mapper, IHttpClientFactory httpClientFactory) 
+    : IPolicyRepository
 {
     private readonly PolicyContext _context = context;
     private readonly IMapper _mapper = mapper;
+    private readonly HttpClient _httpClient = httpClientFactory.CreateClient("ExternalService");
 
     #region GetAllAsync
     public async Task<BaseResponse<IList<PolicyVm>>> GetAllAsync()
@@ -129,6 +131,18 @@ public class PolicyRepository(PolicyContext context, IMapper mapper) : IPolicyRe
                 };
             }
 
+            var userResponse = await _httpClient.GetAsync($"http://userservice:80/user/{policyDto.UserId}");
+            var user = await userResponse.Content.ReadAsStringAsync();
+
+            if (user == null)
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "User with this Id is not existed",
+                    Result = null
+                };
+
+
             var existedPolicyType = await _context.PolicyTypes
                 .AnyAsync(w => w.Id == policyDto.PolicyTypeId);
             if (existedPolicyType == false)
@@ -197,6 +211,17 @@ public class PolicyRepository(PolicyContext context, IMapper mapper) : IPolicyRe
                 {
                     IsSuccess = false,
                     Message = "Policy was not found",
+                    Result = null
+                };
+
+            var userResponse = await _httpClient.GetAsync($"http://userservice:80/user/{policyDto.UserId}");
+            var user = await userResponse.Content.ReadAsStringAsync();
+
+            if (user == null)
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "User with this Id is not existed",
                     Result = null
                 };
 
