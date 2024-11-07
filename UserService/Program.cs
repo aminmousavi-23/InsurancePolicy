@@ -17,13 +17,14 @@ builder.Services.AddDbContext<UserContext>(options =>
 {
     options.UseSqlServer(databaseConnectionString);
 });
-#endregion 
+#endregion
 
 #region Services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddTransient<SeedData>();
 builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
@@ -41,6 +42,14 @@ if (app.Environment.IsDevelopment())
     {
         c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
     });
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<SeedData>();
+    seeder.SeedRolesAsync().GetAwaiter().GetResult();
+    seeder.SeedUsersAsync().GetAwaiter().GetResult();
+    seeder.SeedUserProfilesAsync().GetAwaiter().GetResult();
 }
 
 app.UseHttpsRedirection();
