@@ -11,6 +11,7 @@ public class SeedData
         _context = context;
     }
 
+    #region SeedUsersAsync
     public async Task SeedUsersAsync()
     {
         if (_context.Users.Any() == false)
@@ -35,7 +36,9 @@ public class SeedData
             await _context.SaveChangesAsync();
         }
     }
+    #endregion
 
+    #region SeedRolesAsync
     public async Task SeedRolesAsync()
     {
         if (_context.Roles.Any() == false)
@@ -52,7 +55,9 @@ public class SeedData
             await _context.SaveChangesAsync();
         }
     }
+    #endregion
 
+    #region SeedUserProfilesAsync
     public async Task SeedUserProfilesAsync()
     {
         if (_context.UserProfiles.Any() == false)
@@ -83,5 +88,5 @@ public class SeedData
             await _context.SaveChangesAsync();
         }
     }
-
+    #endregion
 }

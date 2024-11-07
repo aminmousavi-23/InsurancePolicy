@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PolicyService.Data;
+using PolicyService.Features;
 using PolicyService.Profiles;
 using PolicyService.Services.Implementations;
 using PolicyService.Services.Interfaces;
@@ -30,6 +31,8 @@ builder.Services.AddHttpClient("ExternalService", client =>
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
+builder.Services.AddScoped<GenerateUniqueNumber>();
+builder.Services.AddTransient<SeedData>();
 builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
 builder.Services.AddScoped<IPolicyTypeRepository, PolicyTypeRepository>();
 builder.Services.AddScoped<ICoverageRepository, CoverageRepository>();
@@ -48,6 +51,15 @@ if (app.Environment.IsDevelopment())
     {
         c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
     });
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<SeedData>();
+    seeder.SeedPolicyTypesAsync().GetAwaiter().GetResult();
+    seeder.SeedPoliciesAsync().GetAwaiter().GetResult();
+    seeder.SeedClaimAsync().GetAwaiter().GetResult();
+    seeder.SeedCoverageAsync().GetAwaiter().GetResult();
 }
 
 app.UseHttpsRedirection();
