@@ -7,7 +7,8 @@ public class PaymentValidator : AbstractValidator<PaymentDto>
     public PaymentValidator()
     {
         RuleFor(p => p.PaymentDate)
-            .LessThanOrEqualTo(DateTime.Now).WithMessage("Payment action time can not be greater than today");
+            .LessThanOrEqualTo(DateTime.Now)
+            .WithMessage("Payment action time can not be greater than today");
 
         RuleFor(p => p.Description)
         .MinimumLength(5)

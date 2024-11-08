@@ -32,6 +32,7 @@ builder.Services.AddHttpClient("ExternalService", client =>
 
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
+builder.Services.AddScoped<IRefundRepository, RefundRepository>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 #endregion
