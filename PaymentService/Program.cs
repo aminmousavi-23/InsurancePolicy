@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PaymentService.Data;
+using PaymentService.Features;
 using PaymentService.Profiles;
 using PaymentService.Services.Implementations;
 using PaymentService.Services.Interfaces;
@@ -30,6 +31,8 @@ builder.Services.AddHttpClient("ExternalService", client =>
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
+builder.Services.AddScoped<TransactionNumberGenerator>();
+builder.Services.AddTransient<SeedData>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
 builder.Services.AddScoped<IRefundRepository, RefundRepository>();
@@ -46,6 +49,14 @@ if (app.Environment.IsDevelopment())
     {
         c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
     });
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<SeedData>();
+    seeder.SeedPaymentMethodsAsync().GetAwaiter().GetResult();
+    seeder.SeedPaymentsAsync().GetAwaiter().GetResult();
+    seeder.SeedRefundsAsync().GetAwaiter().GetResult();
 }
 
 app.UseHttpsRedirection();

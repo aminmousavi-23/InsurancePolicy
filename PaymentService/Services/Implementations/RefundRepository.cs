@@ -115,6 +115,16 @@ public class RefundRepository(PaymentContext context, IMapper mapper) : IRefundR
                     Result = null
                 };
 
+            var paymentAmount = await _context.Payments
+                .AnyAsync(w => w.Id == refundDto.PaymentId && w.Amount < refundDto.Amount);
+            if (paymentAmount)
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "Refund amount can not be greater than payment amount",
+                    Result = null
+                };
+
             var newRefund = _mapper.Map<Refund>(refundDto);
 
             newRefund.Id = Guid.NewGuid();
