@@ -11,7 +11,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/user",
+      "UpstreamPathTemplate": "/api/user",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -23,7 +23,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/user/{id}",
+      "UpstreamPathTemplate": "/api/user/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     //Role
@@ -36,7 +36,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/role",
+      "UpstreamPathTemplate": "/api/role",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -48,7 +48,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/role/{id}",
+      "UpstreamPathTemplate": "/api/role/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     //UserProfile
@@ -61,7 +61,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/userprofile",
+      "UpstreamPathTemplate": "/api/userprofile",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -73,7 +73,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/userprofile/{id}",
+      "UpstreamPathTemplate": "/api/userprofile/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     //---------------------------------UserService----------------------------------------End
@@ -89,7 +89,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/policy",
+      "UpstreamPathTemplate": "/api/policy",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -101,7 +101,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/policy/{id}",
+      "UpstreamPathTemplate": "/api/policy/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
@@ -113,7 +113,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/policy/policynumber",
+      "UpstreamPathTemplate": "/api/policy/policynumber",
       "UpstreamHttpMethod": [ "GET" ]
     },
     //Policytype
@@ -126,7 +126,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/policytype",
+      "UpstreamPathTemplate": "/api/policytype",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -138,7 +138,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/policytype/{id}",
+      "UpstreamPathTemplate": "/api/policytype/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     //Coverage
@@ -151,7 +151,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/coverage",
+      "UpstreamPathTemplate": "/api/coverage",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -163,7 +163,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/coverage/{id}",
+      "UpstreamPathTemplate": "/api/coverage/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     //Claim
@@ -176,7 +176,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/claim",
+      "UpstreamPathTemplate": "/api/claim",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -188,7 +188,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/claim/{id}",
+      "UpstreamPathTemplate": "/api/claim/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
@@ -200,7 +200,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/claim/claimnumber",
+      "UpstreamPathTemplate": "/api/claim/claimnumber",
       "UpstreamHttpMethod": [ "GET" ]
     },
     //---------------------------------PolicyService----------------------------------------End
@@ -217,7 +217,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/payment",
+      "UpstreamPathTemplate": "/api/payment",
       "UpstreamHttpMethod": [ "GET", "POST" ]
     },
     {
@@ -229,7 +229,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/payment/{id}",
+      "UpstreamPathTemplate": "/api/payment/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     {
@@ -241,7 +241,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/payment/transactionNumber",
+      "UpstreamPathTemplate": "/api/payment/transactionNumber",
       "UpstreamHttpMethod": [ "GET" ]
     },
     //PaymentMethod
@@ -254,7 +254,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/paymentmethod",
+      "UpstreamPathTemplate": "/api/paymentmethod",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -266,7 +266,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/paymentmethod/{id}",
+      "UpstreamPathTemplate": "/api/paymentmethod/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     //Refund
@@ -279,7 +279,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/refund",
+      "UpstreamPathTemplate": "/api/refund",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
@@ -291,7 +291,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/refund/{id}",
+      "UpstreamPathTemplate": "/api/refund/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     }
   ],
