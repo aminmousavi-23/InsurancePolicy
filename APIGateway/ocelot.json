@@ -268,6 +268,31 @@
       ],
       "UpstreamPathTemplate": "/paymentmethod/{id}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    //Refund
+    {
+      "DownstreamPathTemplate": "/refund",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "paymentservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/refund",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/refund/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "paymentservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/refund/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
     }
   ],
 
