@@ -29,6 +29,7 @@ builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserProfileRepository, UserProfileRepository>();
+builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 #endregion
@@ -50,6 +51,7 @@ using (var scope = app.Services.CreateScope())
     seeder.SeedRolesAsync().GetAwaiter().GetResult();
     seeder.SeedUsersAsync().GetAwaiter().GetResult();
     seeder.SeedUserProfilesAsync().GetAwaiter().GetResult();
+    seeder.SeedUserRoleAsync().GetAwaiter().GetResult();
 }
 
 app.UseHttpsRedirection();

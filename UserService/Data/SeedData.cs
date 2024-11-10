@@ -22,11 +22,10 @@ public class SeedData
                 .RuleFor(u => u.Id, f => Guid.NewGuid())
                 .RuleFor(u => u.FirstName, f => f.Name.FirstName())
                 .RuleFor(u => u.LastName, f => f.Name.LastName())
+                .RuleFor(u => u.NationalCode, f => f.Random.String2(10,"1234567890"))
                 .RuleFor(u => u.Email, f => f.Internet.Email())
                 .RuleFor(u => u.HashedPassword, f => f.Internet.Password(8))
-                .RuleFor(u => u.PhoneNumber, f => f.Phone.PhoneNumber())
                 .RuleFor(u => u.DateOfBirth, f => f.Date.Past(30, DateTime.Now.AddYears(-18)))
-                .RuleFor(u => u.RoleId, f => f.PickRandom(roles).Id)
                 .RuleFor(u => u.CreatedAt, f => f.Date.Past(1))
                 .RuleFor(u => u.UpdatedAt, f => f.Date.Recent(1));
 
@@ -88,5 +87,28 @@ public class SeedData
             await _context.SaveChangesAsync();
         }
     }
+    #endregion
+
+    #region SeedUserRoleAsync
+
+    public async Task SeedUserRoleAsync()
+    {
+        if (_context.UserRoles.Any() == false)
+        {
+            var users = _context.Users.ToList();
+            var roles = _context.Roles.ToList();
+
+            var faker = new Faker<UserRole>()
+                .RuleFor(u => u.Id, f => Guid.NewGuid())
+                .RuleFor(u => u.UserId, f => f.PickRandom(users).Id)
+                .RuleFor(u => u.RoleId, f => f.PickRandom(roles).Id);
+
+            var userRoles = faker.Generate(20);
+
+            await _context.UserRoles.AddRangeAsync(userRoles);
+            await _context.SaveChangesAsync();
+        }
+    }
+
     #endregion
 }

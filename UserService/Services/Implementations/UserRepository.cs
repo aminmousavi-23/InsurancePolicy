@@ -23,7 +23,6 @@ namespace UserService.Services.Implementations
             try
             {
                 var users = await _context.Users
-                    .Include(u => u.Role)
                     .ToListAsync();
                 return new BaseResponse<IList<UserVm>>
                 {
@@ -50,7 +49,6 @@ namespace UserService.Services.Implementations
             try
             {
                 var user = await _context.Users
-                    .Include(u => u.Role)
                     .FirstOrDefaultAsync(u => u.Id == id);
                 if (user == null)
                     return new BaseResponse<UserVm>
@@ -101,13 +99,13 @@ namespace UserService.Services.Implementations
                 }
 
 
-                var existedPhoneNumber = await _context.Users
-                    .AnyAsync(w => w.PhoneNumber == userDto.PhoneNumber);
-                if (existedPhoneNumber == true)
+                var existedUser = await _context.Users
+                    .AnyAsync(w => w.NationalCode == userDto.NationalCode);
+                if (existedUser == true)
                     return new BaseResponse
                     {
                         IsSuccess = false,
-                        Message = "User with this phone number already existed",
+                        Message = "User with this National Code already existed",
                         Result = null
                     };
 
@@ -117,17 +115,7 @@ namespace UserService.Services.Implementations
                     return new BaseResponse
                     {
                         IsSuccess = false,
-                        Message = "User with this email already existed",
-                        Result = null
-                    };
-
-                var existedRole = await _context.Roles
-                    .AnyAsync(w => w.Id == userDto.RoleId);
-                if (existedRole == false)
-                    return new BaseResponse
-                    {
-                        IsSuccess = false,
-                        Message = "This role is not existed",
+                        Message = "This email already existed",
                         Result = null
                     };
 
@@ -188,16 +176,6 @@ namespace UserService.Services.Implementations
                     {
                         IsSuccess = false,
                         Message = "User was not found",
-                        Result = null
-                    };
-
-                var existedRole = await _context.Roles
-                    .AnyAsync(w => w.Id == userDto.RoleId);
-                if (existedRole == false)
-                    return new BaseResponse
-                    {
-                        IsSuccess = false,
-                        Message = "This role is not existed",
                         Result = null
                     };
 

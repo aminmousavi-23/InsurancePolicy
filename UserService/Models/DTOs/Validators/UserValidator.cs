@@ -32,9 +32,9 @@ namespace UserService.Models.DTOs.Validators
                 .NotEmpty().WithMessage("Please re-enter your Password")
                 .NotNull();
 
-            RuleFor(user => user.PhoneNumber)
-                .Length(11)
-                .NotEmpty().WithMessage("Please Enter your Phone Number")
+            RuleFor(user => user.NationalCode)
+                .Length(10)
+                .NotEmpty().WithMessage("Please Enter your National Code")
                 .NotNull();
         }
     }

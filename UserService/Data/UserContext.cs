@@ -28,4 +28,5 @@ public class UserContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<UserNotification> UserNotifications { get; set; }
     public DbSet<UserProfile> UserProfiles { get; set; }
+    public DbSet<UserRole> UserRoles { get; set; }
 }
