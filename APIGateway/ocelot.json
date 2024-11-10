@@ -76,6 +76,31 @@
       "UpstreamPathTemplate": "/api/userprofile/{id}",
       "UpstreamHttpMethod": [ "GET" ]
     },
+    //UserRole
+    {
+      "DownstreamPathTemplate": "/userrole",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/userrole",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/userrole/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "userservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/userrole/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
     //---------------------------------UserService----------------------------------------End
 
     //---------------------------------PolicyService----------------------------------------
