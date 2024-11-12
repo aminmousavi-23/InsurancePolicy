@@ -9,8 +9,8 @@ namespace UserService.Services.Interfaces
     {
         Task<BaseResponse<IList<UserVm>>> GetAllAsync();
         Task<BaseResponse<UserVm>> GetByIdAsync(Guid id);
-        Task<BaseResponse> AddAsync(UserDto userDto);
-        Task<BaseResponse> UpdateAsync(UserDto userDto);
+        Task<BaseResponse> AddAsync(RegisterUserDto registerUserDto);
+        Task<BaseResponse> UpdateAsync(UpdateUserDto updateUserDto);
         Task<BaseResponse> DeleteAsync(Guid id);
     }
 }

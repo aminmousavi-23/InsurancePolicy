@@ -2,9 +2,9 @@
 
 namespace UserService.Models.DTOs.Validators
 {
-    public class UserValidator : AbstractValidator<UserDto>
+    public class RegisterUserValidator : AbstractValidator<RegisterUserDto>
     {
-        public UserValidator()
+        public RegisterUserValidator()
         {
             RuleFor(user => user.FirstName)
                 .MinimumLength(3)

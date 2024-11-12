@@ -9,7 +9,8 @@ namespace UserService.Profiles
     {
         public MappingProfile()
         {
-            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, RegisterUserDto>().ReverseMap();
+            CreateMap<User, UpdateUserDto>().ReverseMap();
             CreateMap<User, UserVm>().ReverseMap();
 
             CreateMap<Role, RoleDto>().ReverseMap();

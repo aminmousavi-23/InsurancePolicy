@@ -77,12 +77,12 @@ namespace UserService.Services.Implementations
         #endregion
 
         #region AddAsync
-        public async Task<BaseResponse> AddAsync(UserDto userDto)
+        public async Task<BaseResponse> AddAsync(RegisterUserDto registerUserDto)
         {
             try
             {
-                var validator = new UserValidator();
-                var validatorResult = await validator.ValidateAsync(userDto);
+                var validator = new RegisterUserValidator();
+                var validatorResult = await validator.ValidateAsync(registerUserDto);
 
                 if (validatorResult.Errors.Any())
                 {
@@ -100,7 +100,7 @@ namespace UserService.Services.Implementations
 
 
                 var existedUser = await _context.Users
-                    .AnyAsync(w => w.NationalCode == userDto.NationalCode);
+                    .AnyAsync(w => w.NationalCode == registerUserDto.NationalCode);
                 if (existedUser == true)
                     return new BaseResponse
                     {
@@ -110,7 +110,7 @@ namespace UserService.Services.Implementations
                     };
 
                 var existedEmail = await _context.Users
-                    .AnyAsync(w => w.Email == userDto.Email);
+                    .AnyAsync(w => w.Email == registerUserDto.Email);
                 if (existedEmail == true)
                     return new BaseResponse
                     {
@@ -119,11 +119,11 @@ namespace UserService.Services.Implementations
                         Result = null
                     };
 
-                var newUser = _mapper.Map<User>(userDto);
+                var newUser = _mapper.Map<User>(registerUserDto);
 
                 newUser.Id = Guid.NewGuid();
 
-                newUser.HashedPassword = _passwordHasherService.HashPassword(userDto.Password);
+                newUser.HashedPassword = _passwordHasherService.HashPassword(registerUserDto.Password);
 
                 await _context.Users.AddAsync(newUser);
                 await _context.SaveChangesAsync();
@@ -148,12 +148,12 @@ namespace UserService.Services.Implementations
         #endregion
 
         #region UpdateAsync
-        public async Task<BaseResponse> UpdateAsync(UserDto userDto)
+        public async Task<BaseResponse> UpdateAsync(UpdateUserDto updateUserDto)
         {
             try
             {
-                var validator = new UserValidator();
-                var validatorResult = await validator.ValidateAsync(userDto);
+                var validator = new UpdateUserValidator();
+                var validatorResult = await validator.ValidateAsync(updateUserDto);
 
                 if (validatorResult.Errors.Any())
                 {
@@ -170,7 +170,7 @@ namespace UserService.Services.Implementations
                 }
 
 
-                var user = await _context.Users.FindAsync(userDto.Id);
+                var user = await _context.Users.FindAsync(updateUserDto.Id);
                 if (user == null)
                     return new BaseResponse
                     {
@@ -179,9 +179,18 @@ namespace UserService.Services.Implementations
                         Result = null
                     };
 
-                _mapper.Map(userDto, user);
+                var verifyPassword = _passwordHasherService.VerifyHashedPassword(updateUserDto, user.HashedPassword, updateUserDto.CurrentPassword);
+                if (verifyPassword == "Failed")
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "Current Password is not currect",
+                        Result = null
+                    };
 
-                user.HashedPassword = _passwordHasherService.HashPassword(userDto.Password);
+                _mapper.Map(updateUserDto, user);
+
+                user.HashedPassword = _passwordHasherService.HashPassword(updateUserDto.Password);
 
                 _context.Users.Update(user);
                 await _context.SaveChangesAsync();

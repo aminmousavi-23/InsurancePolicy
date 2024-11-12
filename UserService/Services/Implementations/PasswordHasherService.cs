@@ -10,5 +10,12 @@ namespace UserService.Services.Implementations
             var hasher = new PasswordHasher<object>();
             return hasher.HashPassword(null, password);
         }
+
+        public string VerifyHashedPassword(object updateUserDto,string hashedPassword, string currentPassword)
+        {
+            var hasher = new PasswordHasher<object>();
+            var verify =  hasher.VerifyHashedPassword(updateUserDto, hashedPassword, currentPassword);
+            return verify.ToString();
+        }
     }
 }

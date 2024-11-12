@@ -3,7 +3,7 @@ using UserService.Entities;
 
 namespace UserService.Models.DTOs;
 
-public class UserDto
+public class RegisterUserDto
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }
@@ -14,5 +14,4 @@ public class UserDto
     public string ConfirmPassword { get; set; }
     public DateTime DateOfBirth { get; set; }
     public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
 }

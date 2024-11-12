@@ -37,9 +37,9 @@ namespace UserService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(UserDto userDto)
+        public async Task<IActionResult> Post(RegisterUserDto registerUserDto)
         {
-            var result = await _userRepository.AddAsync(userDto);
+            var result = await _userRepository.AddAsync(registerUserDto);
             return Created("",new BaseResponse
             {
                 IsSuccess = result.IsSuccess,
@@ -49,9 +49,9 @@ namespace UserService.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(UserDto userDto)
+        public async Task<IActionResult> Update(UpdateUserDto updateUserDto)
         {
-            var result = await _userRepository.UpdateAsync(userDto);
+            var result = await _userRepository.UpdateAsync(updateUserDto);
             return Ok(new BaseResponse
             {
                 IsSuccess = result.IsSuccess,
