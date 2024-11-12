@@ -1,6 +1,6 @@
 ﻿namespace UserService.Entities;
 
-public class UserRole //TODO
+public class UserRole 
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
