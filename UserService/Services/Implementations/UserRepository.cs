@@ -122,7 +122,7 @@ namespace UserService.Services.Implementations
                 var newUser = _mapper.Map<User>(registerUserDto);
 
                 newUser.Id = Guid.NewGuid();
-
+                newUser.CreatedAt = DateTime.Now;
                 newUser.HashedPassword = _passwordHasherService.HashPassword(registerUserDto.Password);
 
                 await _context.Users.AddAsync(newUser);
@@ -190,6 +190,7 @@ namespace UserService.Services.Implementations
 
                 _mapper.Map(updateUserDto, user);
 
+                user.UpdatedAt = DateTime.Now;
                 user.HashedPassword = _passwordHasherService.HashPassword(updateUserDto.Password);
 
                 _context.Users.Update(user);

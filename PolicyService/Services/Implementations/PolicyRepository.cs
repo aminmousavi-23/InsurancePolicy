@@ -159,6 +159,7 @@ public class PolicyRepository(PolicyContext context, IMapper mapper, IHttpClient
 
             var generateUniqueNumber = new GenerateUniqueNumber();
             newPolicy.PolicyNumber = generateUniqueNumber.GeneratePolicyNumber();
+            newPolicy.CreatedAt = DateTime.Now;
 
             await _context.Policies.AddAsync(newPolicy);
             await _context.SaveChangesAsync();
@@ -236,6 +237,8 @@ public class PolicyRepository(PolicyContext context, IMapper mapper, IHttpClient
                 };
 
             _mapper.Map(policyDto, policy);
+
+            policy.UpdatedAt = DateTime.Now;
 
             _context.Policies.Update(policy);
             await _context.SaveChangesAsync();
