@@ -7,7 +7,7 @@ using PolicyService.Models.ViewModels;
 using PolicyService.Services.Interfaces;
 using PolicyService.Responses;
 using Microsoft.EntityFrameworkCore;
-using PolicyService.Features;
+using PolicyService.Utilities;
 
 namespace PolicyService.Services.Implementations;
 

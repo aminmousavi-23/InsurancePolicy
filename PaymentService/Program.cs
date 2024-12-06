@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PaymentService.Data;
-using PaymentService.Features;
+using PaymentService.Utilities;
 using PaymentService.Profiles;
 using PaymentService.Services.Implementations;
 using PaymentService.Services.Interfaces;

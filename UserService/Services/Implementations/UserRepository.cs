@@ -7,6 +7,7 @@ using UserService.Models.DTOs.Validators;
 using UserService.Models.ViewModels;
 using UserService.Responses;
 using UserService.Services.Interfaces;
+using UserService.Utilities;
 
 namespace UserService.Services.Implementations
 {

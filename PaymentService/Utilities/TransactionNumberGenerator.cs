@@ -1,4 +1,4 @@
-﻿namespace PaymentService.Features
+﻿namespace PaymentService.Utilities
 {
     public class TransactionNumberGenerator
     {

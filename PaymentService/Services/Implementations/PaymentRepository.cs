@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PaymentService.Data;
 using PaymentService.Entities;
-using PaymentService.Features;
+using PaymentService.Utilities;
 using PaymentService.Models.DTOs;
 using PaymentService.Models.DTOs.Validators;
 using PaymentService.Models.ViewModels;

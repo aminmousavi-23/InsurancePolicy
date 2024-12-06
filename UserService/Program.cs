@@ -3,6 +3,7 @@ using UserService.Data;
 using UserService.Profiles;
 using UserService.Services.Implementations;
 using UserService.Services.Interfaces;
+using UserService.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 

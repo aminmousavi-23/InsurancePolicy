@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PolicyService.Data;
 using PolicyService.Entities;
-using PolicyService.Features;
+using PolicyService.Utilities;
 using PolicyService.Models.DTOs;
 using PolicyService.Models.DTOs.Validators;
 using PolicyService.Models.ViewModels;

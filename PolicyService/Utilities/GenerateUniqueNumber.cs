@@ -1,4 +1,4 @@
-﻿namespace PolicyService.Features
+﻿namespace PolicyService.Utilities
 {
     public class GenerateUniqueNumber
     {

@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using Newtonsoft.Json;
 using PaymentService.Entities;
-using PaymentService.Features;
+using PaymentService.Utilities;
 using PaymentService.Models.DTOs;
 using PaymentService.Responses;
 
