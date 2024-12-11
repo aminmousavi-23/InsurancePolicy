@@ -127,8 +127,6 @@ public class RefundRepository(PaymentContext context, IMapper mapper) : IRefundR
 
             var newRefund = _mapper.Map<Refund>(refundDto);
 
-            newRefund.Id = Guid.NewGuid();
-
             await _context.AddAsync(newRefund);
             await _context.SaveChangesAsync();
 

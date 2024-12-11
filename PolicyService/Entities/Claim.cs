@@ -2,7 +2,7 @@
 
 public class Claim
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public Guid PolicyId { get; set; } 
     public string ClaimNumber { get; set; } 
     public DateTime ClaimDate { get; set; } 

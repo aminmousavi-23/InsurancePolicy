@@ -107,8 +107,6 @@ public class PolicyTypeRepository(PolicyContext context, IMapper mapper) : IPoli
 
             var newPolicyType = _mapper.Map<PolicyType>(policyTypeDto);
 
-            newPolicyType.Id = Guid.NewGuid();
-
             await _context.AddAsync(newPolicyType);
             await _context.SaveChangesAsync();
 

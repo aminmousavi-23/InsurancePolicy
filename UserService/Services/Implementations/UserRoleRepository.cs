@@ -87,8 +87,7 @@ public class UserRoleRepository(UserContext context, IMapper mapper) : IUserRole
                 };
 
             var newUserRole = _mapper.Map<UserRole>(userRole);
-
-            newUserRole.Id = Guid.NewGuid();
+            
 
             await _context.UserRoles.AddAsync(newUserRole);
             await _context.SaveChangesAsync();

@@ -161,8 +161,6 @@ public class ClaimRepository(PolicyContext context, IMapper mapper) : IClaimRepo
 
             var newClaim = _mapper.Map<Claim>(claimDto);
 
-            newClaim.Id = Guid.NewGuid();
-
             var generateUniqueNumber = new GenerateUniqueNumber();
             newClaim.ClaimNumber = generateUniqueNumber.GenerateClaimNumber();
 

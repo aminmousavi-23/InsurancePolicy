@@ -2,7 +2,7 @@
 
 public class Refund 
 {
-    public Guid Id { get; set; } 
+    public Guid Id { get; set; } = Guid.NewGuid();
     public Guid PaymentId { get; set; } 
     public decimal Amount { get; set; } 
     public DateTime RefundDate { get; set; }

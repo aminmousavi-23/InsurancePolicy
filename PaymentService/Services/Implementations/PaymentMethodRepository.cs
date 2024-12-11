@@ -107,8 +107,6 @@ public class PaymentMethodRepository(PaymentContext context, IMapper mapper) : I
 
             var newPaymentMethod = _mapper.Map<PaymentMethod>(paymentMethodDto);
 
-            newPaymentMethod.Id = Guid.NewGuid();
-
             await _context.AddAsync(newPaymentMethod);
             await _context.SaveChangesAsync();
 

@@ -161,8 +161,6 @@ public class PaymentRepository(PaymentContext context, IMapper mapper, IHttpClie
 
             var newPayment = _mapper.Map<Payment>(paymentDto);
 
-            newPayment.Id = Guid.NewGuid();
-
             var transactionNumberGenerator = new TransactionNumberGenerator();
             newPayment.TransactionNumber = transactionNumberGenerator.GenerateTransactionNumber();
 

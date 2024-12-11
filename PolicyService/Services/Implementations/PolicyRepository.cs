@@ -155,8 +155,6 @@ public class PolicyRepository(PolicyContext context, IMapper mapper, IHttpClient
 
             var newPolicy = _mapper.Map<Policy>(policyDto);
 
-            newPolicy.Id = Guid.NewGuid();
-
             var generateUniqueNumber = new GenerateUniqueNumber();
             newPolicy.PolicyNumber = generateUniqueNumber.GeneratePolicyNumber();
             newPolicy.CreatedAt = DateTime.Now;

@@ -122,8 +122,6 @@ namespace UserService.Services.Implementations
 
                 var newUser = _mapper.Map<User>(registerUserDto);
 
-                newUser.Id = Guid.NewGuid();
-                newUser.CreatedAt = DateTime.Now;
                 newUser.HashedPassword = _passwordHasherService.HashPassword(registerUserDto.Password);
 
                 await _context.Users.AddAsync(newUser);

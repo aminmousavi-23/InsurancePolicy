@@ -107,8 +107,6 @@ namespace UserService.Services.Implementations
 
                 var newRole = _mapper.Map<Role>(roleDto);
 
-                newRole.Id = Guid.NewGuid();
-
                 await _context.Roles.AddAsync(newRole);
                 await _context.SaveChangesAsync();
 

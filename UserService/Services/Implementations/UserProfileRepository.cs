@@ -107,7 +107,6 @@ namespace UserService.Services.Implementations
 
                 var newUserProfile = _mapper.Map<UserProfile>(userProfileDto);
 
-                newUserProfile.Id = Guid.NewGuid();
 
                 await _context.UserProfiles.AddAsync(newUserProfile);
                 await _context.SaveChangesAsync();

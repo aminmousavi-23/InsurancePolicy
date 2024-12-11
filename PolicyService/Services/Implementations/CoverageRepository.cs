@@ -117,8 +117,6 @@ public class CoverageRepository(PolicyContext context, IMapper mapper) : ICovera
 
             var newCoverage = _mapper.Map<Coverage>(coverageDto);
 
-            newCoverage.Id = Guid.NewGuid();
-
             await _context.AddAsync(newCoverage);
             await _context.SaveChangesAsync();
 
