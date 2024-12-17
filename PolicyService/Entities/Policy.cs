@@ -1,6 +1,6 @@
 ﻿namespace PolicyService.Entities;
 
-public class Policy //TODO Id and CreateDate for all entities
+public class Policy 
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public string PolicyNumber { get; set; } 
